@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurningAnimation", "Assembly-CSharp.csproj", "{94CE77B3-0C81-D33E-383F-0BF17E6BAF97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94CE77B3-0C81-D33E-383F-0BF17E6BAF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94CE77B3-0C81-D33E-383F-0BF17E6BAF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94CE77B3-0C81-D33E-383F-0BF17E6BAF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94CE77B3-0C81-D33E-383F-0BF17E6BAF97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetCube", "Assembly-CSharp-firstpass.csproj", "{37F48817-904F-D22E-73F1-8872FDFC88F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetCube", "Assembly-CSharp.csproj", "{6F74260F-F382-A6F0-77C0-12A64881FCA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetCube", "Assembly-CSharp-Editor-firstpass.csproj", "{D3563255-73D3-6523-D674-EC798A499CF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37F48817-904F-D22E-73F1-8872FDFC88F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F48817-904F-D22E-73F1-8872FDFC88F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F48817-904F-D22E-73F1-8872FDFC88F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F48817-904F-D22E-73F1-8872FDFC88F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F74260F-F382-A6F0-77C0-12A64881FCA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F74260F-F382-A6F0-77C0-12A64881FCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F74260F-F382-A6F0-77C0-12A64881FCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F74260F-F382-A6F0-77C0-12A64881FCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3563255-73D3-6523-D674-EC798A499CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3563255-73D3-6523-D674-EC798A499CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3563255-73D3-6523-D674-EC798A499CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3563255-73D3-6523-D674-EC798A499CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
