@@ -4,7 +4,49 @@ using UnityEngine;
 
 public class FollowPath : MonoBehaviour {
 
-	Transform goal;
+	public GameObject wpManager;
+	GameObject[] wps;
+
+    UnityEngine.AI.NavMeshAgent agent;
+
+	// Use this for initialization
+	void Start () {
+		wps = wpManager.GetComponent<WPManager>().waypoints;
+        agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+	}
+    
+	public void GoToHeli()
+	{
+        agent.SetDestination(wps[4].transform.position);
+		//g.AStar(currentNode, wps[4]);
+		//currentWP = 0;
+	}
+
+	public void GoToRuin()
+	{
+        agent.SetDestination(wps[0].transform.position);
+		//g.AStar(currentNode, wps[0]);
+		//currentWP = 0;
+	}
+
+	public void GoBehindHeli()
+	{
+		//g.AStar(currentNode, wps[11]);
+		//currentWP = 0;
+	}
+	
+	// Update is called once per frame
+	void LateUpdate ()
+    {
+		
+		
+	
+	}
+}
+
+// Old Code
+/*
+ Transform goal;
 	float speed = 5.0f;
 	float accuracy = 1.0f;
 	float rotSpeed = 2.0f;
@@ -74,4 +116,4 @@ public class FollowPath : MonoBehaviour {
 		
 	
 	}
-}
+ */
