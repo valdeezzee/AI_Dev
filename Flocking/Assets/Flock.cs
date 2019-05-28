@@ -8,10 +8,15 @@ public class Flock : MonoBehaviour
     public FlockManager myManager;
     float speed;
     bool turning = false;
+    Animator anim;
     // Use this for initialization
     void Start()
     {
         speed = Random.Range(myManager.minSpeed, myManager.maxSpeed);
+
+        anim = this.GetComponent<Animator>();
+        anim.SetFloat("swimOffset", Random.Range(0.0f, 1.0f));
+        anim.SetFloat("swimSpeed", speed);
     }
 
     // Update is called once per frame
@@ -61,6 +66,8 @@ public class Flock : MonoBehaviour
 
             if (Random.Range(0, 100) < 20)
                 ApplyRules();
+
+            anim.SetFloat("swimSpeed", speed);
         }
 
         
