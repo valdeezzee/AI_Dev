@@ -9,7 +9,7 @@ public class AI : MonoBehaviour
 {
     public Transform player;
     public Transform bulletSpawn;
-    public Slider healthBar;   
+    public Slider healthBar;
     public GameObject bulletPrefab;
 
     NavMeshAgent agent;
@@ -21,40 +21,35 @@ public class AI : MonoBehaviour
     float visibleRange = 80.0f;
     float shotRange = 40.0f;
 
+    Vector3 lastAttackingPos;
+    bool angry = false;
+
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
         agent.stoppingDistance = shotRange - 5; //for a little buffer
-        InvokeRepeating("UpdateHealth",5,0.5f);
+        InvokeRepeating("UpdateHealth", 5, 0.5f);
     }
 
     void Update()
     {
         Vector3 healthBarPos = Camera.main.WorldToScreenPoint(this.transform.position);
         healthBar.value = (int)health;
-        healthBar.transform.position = healthBarPos + new Vector3(0,60,0);
+        healthBar.transform.position = healthBarPos + new Vector3(0, 60, 0);
     }
 
     void UpdateHealth()
     {
-       if(health < 100)
-        health ++;
+        if (health < 100)
+            health++;
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "bullet")
+        if (col.gameObject.tag == "bullet")
         {
             health -= 10;
         }
-    }
-
-    [Task]
-    public void PickRandomDestination()
-    {
-        Vector3 dest = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
-        agent.SetDestination(dest);
-        Task.current.Succeed();
     }
 
     [Task]
@@ -66,11 +61,20 @@ public class AI : MonoBehaviour
     }
 
     [Task]
+    public void PickRandomDestination()
+    {
+        Vector3 dest = new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
+        agent.SetDestination(dest);
+        Task.current.Succeed();
+    }
+
+    [Task]
     public void MoveToDestination()
     {
         if (Task.isInspected)
             Task.current.debugInfo = string.Format("t={0:0.00}", Time.time);
-        if(agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
             Task.current.Succeed();
         }
@@ -96,13 +100,13 @@ public class AI : MonoBehaviour
     {
         Vector3 direction = target - this.transform.position;
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotSpeed);
-        Debug.Log(Vector3.Angle(this.transform.forward, direction));
-
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+                                                Quaternion.LookRotation(direction),
+                                                Time.deltaTime * rotSpeed);
 
         if (Task.isInspected)
-            Task.current.debugInfo = string.Format("angle={0}", 
-                                                   Vector3.Angle(this.transform.forward,direction));
+            Task.current.debugInfo = string.Format("angle={0}",
+                Vector3.Angle(this.transform.forward, direction));
 
         if (Vector3.Angle(this.transform.forward, direction) < 5.0f)
         {
@@ -113,7 +117,8 @@ public class AI : MonoBehaviour
     [Task]
     public bool Fire()
     {
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, bulletSpawn.transform.position,
+                                                           bulletSpawn.transform.rotation);
         bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 2000);
         return true;
     }
@@ -128,9 +133,9 @@ public class AI : MonoBehaviour
 
         Debug.DrawRay(this.transform.position, distance, Color.red);
 
-        if(Physics.Raycast(this.transform.position,distance, out hit))
+        if (Physics.Raycast(this.transform.position, distance, out hit))
         {
-            if(hit.collider.gameObject.tag == "wall")
+            if (hit.collider.gameObject.tag == "wall")
             {
                 seeWall = true;
             }
@@ -148,6 +153,9 @@ public class AI : MonoBehaviour
     [Task]
     public bool IsHealthLessThan(float health)
     {
+        if (Task.isInspected)
+            Task.current.debugInfo = string.Format("health={0}", this.health);
+
         return this.health < health;
     }
 
@@ -159,12 +167,46 @@ public class AI : MonoBehaviour
     }
 
     [Task]
+    public void TargetAttackPos()
+    {
+        target = lastAttackingPos;
+        Task.current.Succeed();
+    }
+
+    [Task]
     public void TakeCover()
     {
         Vector3 awayFromPlayer = this.transform.position - player.transform.position;
-        Vector3 dest = this.transform.position + awayFromPlayer * 2;
+
+        //increased the flee range to the agent
+        //has further to come back
+        Vector3 dest = this.transform.position + awayFromPlayer * 5;
         agent.SetDestination(dest);
+
+        //remember where we were before fleeing
+        //and get angry
+        lastAttackingPos = this.transform.position;
+        angry = true;
+        //don't be angry after 30 seconds
+        //make sure this is longer than it takes for
+        //health to be restored
+        Invoke("CoolDown", 30);
+
         Task.current.Succeed();
+    }
+
+    void CoolDown()
+    {
+        angry = false;
+    }
+
+    [Task]
+    public bool IsAngry()
+    {
+        if (Task.isInspected)
+            Task.current.debugInfo = string.Format("angry={0}", angry);
+
+        return angry;
     }
 
     [Task]
@@ -187,10 +229,11 @@ public class AI : MonoBehaviour
     {
         Vector3 distance = target - this.transform.position;
         if (distance.magnitude < shotRange &&
-                Vector3.Angle(this.transform.forward, distance) < 1.0f)
+            Vector3.Angle(this.transform.forward, distance) < 1.0f)
             return true;
         else
             return false;
     }
+
 }
 
