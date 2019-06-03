@@ -8,6 +8,7 @@ public class Worker : MonoBehaviour, IGoap
 	NavMeshAgent agent;
 	Vector3 previousDestination;
 	Inventory inv;
+    public Inventory windmill;
 
 	void Start()
 	{
@@ -18,8 +19,10 @@ public class Worker : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		worldData.Add(new KeyValuePair<string, object>("hasFlour", (inv.flourLevel > 1) ));
-		return worldData;
+        worldData.Add(new KeyValuePair<string, object>("hasStock", (windmill.flourLevel > 4)));
+        worldData.Add(new KeyValuePair<string, object>("hasFlour", (inv.flourLevel > 1) ));
+        worldData.Add(new KeyValuePair<string, object>("hasDelivery", (inv.breadLevel > 4)));
+        return worldData;
 	}
 
 
